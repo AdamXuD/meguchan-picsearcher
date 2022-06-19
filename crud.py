@@ -49,7 +49,7 @@ def nowTimestamp():
 @CRUD
 def clearExpiredResults():
     return Results.delete().where(
-        Results.created_time <= nowTimestamp() - 3600
+        Results.created_time <= nowTimestamp() - setting.result_ttl
     ).execute() > 0
 
 
@@ -81,7 +81,7 @@ def selectResult(key: str):
     if not query:
         return None
     res: Results = query.first()
-    if nowTimestamp() - res.created_time >= 3600:
+    if nowTimestamp() - res.created_time >= setting.result_ttl:
         clearExpiredResults()
         return None
     return model_to_dict(res)

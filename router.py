@@ -21,7 +21,7 @@ def checkSecret(secret: Optional[str] = None):
 async def _(
     url: AnyHttpUrl,
     engine: EngineEnum = EngineEnum.ascii2d,
-    dataType: DataTypeEnum = DataTypeEnum.web,
+    data_type: DataTypeEnum = DataTypeEnum.web,
     isAuth: bool = Depends(checkSecret)
 ):
     if not isAuth:
@@ -42,13 +42,13 @@ async def _(
         "hint": hint,
         "results": res
     }
-    if dataType == DataTypeEnum.json:
+    if data_type == DataTypeEnum.json:
         return {
             "success": True,
             "msg": "",
             "data": data
         }
-    elif dataType == DataTypeEnum.web:
+    elif data_type == DataTypeEnum.web:
         return {
             "success": True,
             "msg": "",
