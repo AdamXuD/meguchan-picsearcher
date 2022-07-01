@@ -6,7 +6,12 @@ from setting import setting
 
 
 def parseResultItem(tag: Tag):
-    thumbnail = tag.select_one(".resulttableimage img").attrs["src"]
+    thumbnailAttrs = tag.select_one(
+        ".resulttableimage img"
+    ).attrs
+    thumbnail = thumbnailAttrs.get("data-src")
+    if not thumbnail:
+        thumbnail = thumbnailAttrs["src"]
     similarity = tag.select_one(".resultsimilarityinfo").get_text()
     title = tag.select_one(".resulttitle")
     title = title.get_text(" ") if title else ""
